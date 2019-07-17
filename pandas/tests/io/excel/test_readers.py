@@ -51,6 +51,13 @@ def ignore_xlrd_time_clock_warning():
                 pytest.mark.filterwarnings("ignore:.*html argument"),
             ],
         ),
+		pytest.param(
+			"pyxlsb",
+			marks=[
+				td.skip_if_no("pyxlsb"),
+				pytest.mark.filterwarnings("ignore:.*html argument"),
+			],
+		),
         pytest.param(
             None,
             marks=[
@@ -75,6 +82,8 @@ class TestReaders:
         Change directory and set engine for read_excel calls.
         """
         if engine == "openpyxl" and read_ext == ".xls":
+            pytest.skip()
+        if engine == "pyxlsb" and read_ext == ".xlsb":
             pytest.skip()
         if engine == "odf" and read_ext != ".ods":
             pytest.skip()
